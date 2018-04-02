@@ -22,6 +22,8 @@ class GroceryListViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     var presenter:GroceryListPresenter!
+    private let transition = GroceryItemAnimator()
+    private var tappedCellFrame = CGRect.zero
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +69,7 @@ extension GroceryListViewController : UICollectionViewDelegate, UICollectionView
         groceryCell.itemNameLabel.text = item.name
         groceryCell.itemWeightLabel.text = item.weight
         groceryCell.itemColourView.backgroundColor = UIColor().HexToColor(hexString: item.bagColor, alpha: 1.0)
+        groceryCell.itemColourView.layer.cornerRadius = groceryCell.itemColourView.frame.size.width/2
         
         return groceryCell
     }
@@ -76,8 +79,14 @@ extension GroceryListViewController : UICollectionViewDelegate, UICollectionView
         guard let item = presenter.itemForIndex(index: indexPath.item) else { return }
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         guard let itemFullscreenVC = storyboard.instantiateViewController(withIdentifier: "itemFullscreenVC") as? GroceryItemFullscreenViewController else { return }
+        
+        if let tappedCell = collectionView.cellForItem(at: indexPath) {
+            tappedCellFrame = tappedCell.superview?.convert(tappedCell.frame, to: nil) ?? CGRect.zero
+        }
+        
         itemFullscreenVC.item = item
-        self.present(itemFullscreenVC, animated: true, completion: nil)
+        itemFullscreenVC.transitioningDelegate = self
+        present(itemFullscreenVC, animated: true, completion: nil)
     }
 }
 
@@ -89,5 +98,21 @@ extension GroceryListViewController : UICollectionViewDelegateFlowLayout {
         } else {
             return CGSize(width: 100, height: 50)
         }
+    }
+}
+
+extension GroceryListViewController : UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard presented is GroceryItemFullscreenViewController else { return nil }
+        
+        transition.originFrame = tappedCellFrame
+        transition.presenting = true
+        
+        return transition
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = false
+        return transition
     }
 }

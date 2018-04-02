@@ -23,6 +23,7 @@ class GroceryItemFullscreenViewController: UIViewController {
         itemNameLabel.text = item.name
         itemWeightLabel.text = item.weight
         itemColourView.backgroundColor = UIColor().HexToColor(hexString: item.bagColor)
+        itemColourView.layer.cornerRadius = 15
     }
 
     override func didReceiveMemoryWarning() {

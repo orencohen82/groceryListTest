@@ -8,14 +8,20 @@
 
 import UIKit
 
-class GroceryItem: NSObject {
-    var itemName:String
-    var itemWeight:Float
-    var itemColour:String
+struct GroceryItem: Codable {
+    var name:String
+    var weight:String
+    var bagColor:String
     
-    init(itemName:String, itemWeight:Float, itemColour:String) {
-        self.itemName = itemName
-        self.itemWeight = itemWeight
-        self.itemColour = itemColour
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case weight
+        case bagColor
+    }
+    
+    init(itemName:String, itemWeight:String, itemColour:String) {
+        self.name = itemName
+        self.weight = itemWeight
+        self.bagColor = itemColour
     }
 }

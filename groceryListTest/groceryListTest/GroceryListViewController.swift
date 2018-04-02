@@ -49,16 +49,24 @@ extension GroceryListViewController : UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "groceryCell", for: indexPath)
+        
         guard let groceryCell = cell as? GroceryCell else { return cell }
         guard let item = presenter.itemForIndex(index: indexPath.item) else { return cell }
-        groceryCell.itemNameLabel.text = item.itemName
-        groceryCell.itemWeightLabel.text = "\(item.itemWeight)"
         
-        return cell
+        groceryCell.itemNameLabel.text = item.name
+        groceryCell.itemWeightLabel.text = item.weight
+        groceryCell.itemColourView.backgroundColor = UIColor.orange // TODO: Change this!
+        
+        return groceryCell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        // Open fullscreen item view
+        guard let item = presenter.itemForIndex(index: indexPath.item) else { return }
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        guard let itemFullscreenVC = storyboard.instantiateViewController(withIdentifier: "itemFullscreenVC") as? GroceryItemFullscreenViewController else { return }
+        itemFullscreenVC.item = item
+        self.present(itemFullscreenVC, animated: true, completion: nil)
     }
 }
 

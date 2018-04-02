@@ -17,6 +17,7 @@
 		A0828677207226BE0056485D /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0828676207226BE0056485D /* GroceryItem.swift */; };
 		A082867C207232190056485D /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A082867D207232190056485D /* Starscream.framework */; };
 		A082867F2072343B0056485D /* GroceryItemFullscreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A082867E2072343B0056485D /* GroceryItemFullscreenViewController.swift */; };
+		A082868120723F560056485D /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A082868020723F560056485D /* UIColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		A0828676207226BE0056485D /* GroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
 		A082867D207232190056485D /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A082867E2072343B0056485D /* GroceryItemFullscreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItemFullscreenViewController.swift; sourceTree = "<group>"; };
+		A082868020723F560056485D /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				A082865A20721F0F0056485D /* Main.storyboard */,
 				A08286742072267A0056485D /* GroceryListPresenter.swift */,
 				A0828676207226BE0056485D /* GroceryItem.swift */,
+				A082868020723F560056485D /* UIColorExtension.swift */,
 				A082865D20721F0F0056485D /* Assets.xcassets */,
 				A082865F20721F0F0056485D /* LaunchScreen.storyboard */,
 				A082866220721F0F0056485D /* Info.plist */,
@@ -288,6 +291,7 @@
 				A082865920721F0F0056485D /* GroceryListViewController.swift in Sources */,
 				A0828677207226BE0056485D /* GroceryItem.swift in Sources */,
 				A082865720721F0F0056485D /* AppDelegate.swift in Sources */,
+				A082868120723F560056485D /* UIColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

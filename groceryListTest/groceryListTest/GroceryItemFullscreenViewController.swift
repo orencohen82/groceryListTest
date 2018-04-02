@@ -22,6 +22,7 @@ class GroceryItemFullscreenViewController: UIViewController {
         guard let item = self.item else { return }
         itemNameLabel.text = item.name
         itemWeightLabel.text = item.weight
+        itemColourView.backgroundColor = UIColor().HexToColor(hexString: item.bagColor)
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,6 +31,9 @@ class GroceryItemFullscreenViewController: UIViewController {
     }
     
 
+    @IBAction func closeButtonPressed(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

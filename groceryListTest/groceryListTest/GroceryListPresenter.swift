@@ -16,10 +16,11 @@ enum GroceryListLayout {
 
 class GroceryListPresenter: NSObject {
     
-    var itemsArray:[GroceryItem]
-    var layout:GroceryListLayout
     weak var groceryListVC:GroceryListViewController?
-    var socket:WebSocket?
+    
+    private var itemsArray:[GroceryItem]
+    private var layout:GroceryListLayout    
+    private var socket:WebSocket?
     
     override init() {
         itemsArray = [GroceryItem]()
@@ -32,6 +33,10 @@ class GroceryListPresenter: NSObject {
         socket?.connect()
     }
     
+    func getLayout() -> GroceryListLayout {
+        return layout
+    }
+    
     func numberOfItems() -> Int {
         return itemsArray.count
     }
@@ -39,6 +44,14 @@ class GroceryListPresenter: NSObject {
     func itemForIndex(index:Int) -> GroceryItem? {
         guard index < itemsArray.count else { return nil }
         return itemsArray[index]
+    }
+    
+    func changeLayout() {
+        if layout == .grid {
+            layout = .list
+        } else {
+            layout = .grid
+        }
     }
 }
 
@@ -48,7 +61,7 @@ extension GroceryListPresenter : WebSocketDelegate {
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        print("websocket is disconnected: \(error?.localizedDescription)")
+        print("websocket is disconnected: \(String(describing: error?.localizedDescription))")
         
         
     }
@@ -61,7 +74,7 @@ extension GroceryListPresenter : WebSocketDelegate {
                 let decoder = JSONDecoder()
                 let item = try decoder.decode(GroceryItem.self, from: data)
                 itemsArray.insert(item, at: 0)
-                groceryListVC?.refreshCollectionView()
+                groceryListVC?.newItemAddedAtIndex(index: 0)
             }
             
         } catch let err {

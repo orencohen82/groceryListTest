@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class GroceryCell : UICollectionViewCell {
     
     @IBOutlet weak var itemNameLabel: UILabel!
@@ -34,11 +36,20 @@ class GroceryListViewController: UIViewController {
     }
     
     @IBAction func changeLayoutPressed(_ sender: UIButton) {
-        
+        presenter.changeLayout()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func refreshCollectionView() {
         collectionView.reloadData()
+    }
+    
+    func newItemAddedAtIndex(index:Int) {
+        collectionView.performBatchUpdates({
+            collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+        }, completion: { (finished) in
+            
+        })
     }
 }
 
@@ -55,7 +66,7 @@ extension GroceryListViewController : UICollectionViewDelegate, UICollectionView
         
         groceryCell.itemNameLabel.text = item.name
         groceryCell.itemWeightLabel.text = item.weight
-        groceryCell.itemColourView.backgroundColor = UIColor.orange // TODO: Change this!
+        groceryCell.itemColourView.backgroundColor = UIColor().HexToColor(hexString: item.bagColor, alpha: 1.0)
         
         return groceryCell
     }
@@ -73,7 +84,7 @@ extension GroceryListViewController : UICollectionViewDelegate, UICollectionView
 extension GroceryListViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if presenter.layout == .list {
+        if presenter.getLayout() == .list {
             return CGSize(width: 250, height: 50)
         } else {
             return CGSize(width: 100, height: 50)
